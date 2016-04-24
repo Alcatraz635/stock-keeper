@@ -1,12 +1,10 @@
-# test
+# In development
 
-This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
-version 0.15.1.
+Display stock information and display on graph
 
-## Build & development
-
-Run `grunt` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `grunt test` will run the unit tests with karma.
+#Technologies used
+<ul>
+<li>Angular</li>
+<li>Jquery</li>
+<li>D3.js</li>
+</ul>
