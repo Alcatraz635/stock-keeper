@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div ng-if='data.LastPrice' id="price">
+      <div id="positivePrice" style="color:#50c878" ng-if="changePercentFlag">
+        <h1>{{data.LastPrice}}</h2><h3>USD <i class="fa fa-arrow-up" aria-hidden="true"></i>{{data.Change}} ({{data.ChangePercent}}%)</h3>
+        </h1>
+      </div>
+      <div id="negativePrice" style="color:#900" ng-if="!changePercentFlag">
+        <h1>{{data.LastPrice}}</h2><h3>USD <i class="fa fa-arrow-down" aria-hidden="true"></i>{{data.Change}} ({{data.ChangePercent}}%)</h3>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="col-sm-6" ng-if="data.Open">
+      <p>
+        <h3>Open:</h3>  <h4>{{data.Open}}</h4>
+        <h3>High:</h3>  <h4>{{data.High}}</h4>
+        <h3>Low:</h3> <h4>{{data.Low}}</h4>
+      </p>
+    </div>
+    <div class="col-sm-6" ng-if="data.MarketCap">
+      <p>
+        <h3>Market Capitalization:</h3> <h4>{{data.MarketCap}}</h4>
+        <h3>Volume:</h3> <h4> {{data.Volume}}</h4>
+        <h3>Change Year to Date:</h3> <h4>{{data.ChangeYTD}} ({{data.ChangePercentYTD}}%)</h4>
+      </p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="" ng-app="stockKeeper">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stock Keeper</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/controllers/stock-keeper-controller.js"></script>
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body ng-controller="stockKeeperController">
+    <nav class="navbar navbar-default no-margin">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header fixed-brand">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"  id="menu-toggle">
+        <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span>
+        </button>
+        <a class="navbar-brand" href="#"><i class="fa fa-line-chart fa-4"></i> Stock Keeper</a>
+        </div><!-- navbar-header-->
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active" ><button class="navbar-toggle collapse in" data-toggle="collapse" id="menu-toggle-2"> <span class="glyphicon glyphicon-th-large" aria-hidden="true"></span></button></li>
+          </ul>
+          </div><!-- bs-example-navbar-collapse-1 -->
+        </nav>
+        <div id="wrapper">
+          <!-- Sidebar -->
+          <div id="sidebar-wrapper">
+            <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+              
+              <li class="active">
+                <form method="" role="form">
+                  <div class="form-group">
+                    <label for="symbol"><h3 id="symbol-label">Ticker Symbol</h3></label>
+                    <input type="text" class="form-control" id="symbol" ng-model="stock.symbol" placeholder="e.g. 'GM'">
+                  </div>
+                  
+                  <button type="submit" class="btn btn-primary" ng-click="getData()">Submit</button>
+                </form>
+              </li>
+              
+            </ul>
+            </div><!-- /#sidebar-wrapper -->
+            <!-- Data content -->
+            <div id="page-content-wrapper">
+              <div class="container-fluid xyz">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="jumbotron">
+                      <h1 class="display-3" id="headline" ng-if='data.Name'>
+                      {{data.Name}} [{{data.Symbol}}]
+                      </h1>
+                      <h1 class="display-3" id="headline" ng-if='!data.Name'>
+                      Stock Keeper
+                      </h1>
+                      <p class="lead" ng-if='!data.Timestamp'>Get stock information by searching a ticker symbol in the text area to the left!</p>
+                    </p>
+                    <p class="lead" ng-if='data.Timestamp'>Time of Report:<br>{{data.Timestamp}}</p>
+                  </p>
+                </div>
+                <div id="data-view" ng-include="'views/data.html'"></div>
+                <div id="graph-view" ng-include="'views/graph.html'"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+    </div>
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- D3 JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+    <script>
+    !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+    (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+    r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+    }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-XXXXX-X');
+    ga('send', 'pageview');
+    </script>
+    <script type="text/javascript">
+    $("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+    });
+    $("#menu-toggle-2").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled-2");
+    $('#menu ul').hide();
+    });
+    
+    function initMenu() {
+    $('#menu ul').hide();
+    $('#menu ul').children('.current').parent().show();
+    //$('#menu ul:first').show();
+    $('#menu li a').click(
+    function() {
+    var checkElement = $(this).next();
+    if((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+    return false;
+    }
+    if((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+    $('#menu ul:visible').slideUp('normal');
+    checkElement.slideDown('normal');
+    return false;
+    }
+    }
+    );
+    }
+    $(document).ready(function() {initMenu();});
+    </script>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>-->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
