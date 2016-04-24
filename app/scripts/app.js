@@ -29,3 +29,4 @@ angular
         redirectTo: '/'
       });
   });
+Status API Training Shop Blog About
